@@ -66,6 +66,9 @@ public class TaskService{
         
         switch(TaskTypeEnum.fromString(taskCreateDto.getType())){
             case DATA:
+                if (taskCreateDto.getCompletionDate().isBefore(LocalDate.now())) {
+                    throw new IllegalArgumentException("A data de conclusão deve ser hoje ou uma data futura.");
+                }
                 task = new DateTask(taskCreateDto);
                 ((DateTask) task).setCompletionDate(taskCreateDto.getCompletionDate());
                 break;

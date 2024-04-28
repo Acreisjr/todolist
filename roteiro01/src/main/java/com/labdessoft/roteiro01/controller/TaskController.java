@@ -38,14 +38,15 @@ public class TaskController {
 
     @PostMapping("/task")
     @Operation(summary = "Criar uma nova tarefa")
-    public ResponseEntity<Void> createTask(@RequestBody TaskCreateDto taskCreateDto) throws Exception {
-        try{
+    public ResponseEntity<String> createTask(@RequestBody TaskCreateDto taskCreateDto) throws Exception {
+        try {
             taskService.createTask(taskCreateDto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch(Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Tarefa criada com sucesso", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erro ao criar tarefa: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 
     @PatchMapping("/task/{id}")
     @Operation(summary = "Finalizar uma tarefa")
@@ -60,12 +61,12 @@ public class TaskController {
 
     @DeleteMapping("/task/{id}")
     @Operation(summary = "Deletar uma tarefa")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws Exception {
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) throws Exception {
         try{
             taskService.deleteTask(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch(Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Erro ao deletar tarefa: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

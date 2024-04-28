@@ -1,5 +1,8 @@
 package com.labdessoft.roteiro01.dto;
 
+import lombok.Getter;
+
+@Getter
 public enum TaskPriorityEnum {
     HIGH("Alta"),
     MEDIUM("Media"),
@@ -11,10 +14,10 @@ public enum TaskPriorityEnum {
         this.value = value;
     }
 
-    public static TaskTypeEnum fromString(String value) {
-        for (TaskTypeEnum type : TaskTypeEnum.values()) {
-            if (type.getValue().equalsIgnoreCase(value)) {
-                return type;
+    public static TaskPriorityEnum fromString(String value) {
+        for (TaskPriorityEnum priority : TaskPriorityEnum.values()) {
+            if (priority.getValue().equalsIgnoreCase(value)) {
+                return priority;
             }
         }
         throw new IllegalArgumentException("Tipo de tarefa inválido: " + value);
