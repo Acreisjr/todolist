@@ -3,6 +3,7 @@ package com.labdessoft.roteiro01.entity;
 import com.labdessoft.roteiro01.dto.TaskCreateDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @DiscriminatorValue("PRAZO")
 @Schema(description = "Entidade que representa uma tarefa com prazo")
 public class DeadlineTask extends Task {
+    @Column(nullable = false)
     private Integer daysToCompletion;
     public DeadlineTask(TaskCreateDto taskCreateDto) {
         super(taskCreateDto);

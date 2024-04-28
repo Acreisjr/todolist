@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TaskController {
@@ -21,16 +22,16 @@ public class TaskController {
 
     @GetMapping("/task")
     @Operation(summary = "Listar todas as tarefas da lista")
-    public ResponseEntity<List<Task>> listAll() throws Exception {
-        try{
-            List<Task> taskList = taskService.listAll();
+    public ResponseEntity<List<Map<String, Object>>> listAll() throws Exception {
+        try {
+            List<Map<String, Object>> taskListWithStatus = taskService.listAllTasksWithStatus();
             
-            if(taskList.isEmpty()){
+            if (taskListWithStatus.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             
-            return ResponseEntity.ok(taskList);
-        }catch(Exception e){
+            return ResponseEntity.ok(taskListWithStatus);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

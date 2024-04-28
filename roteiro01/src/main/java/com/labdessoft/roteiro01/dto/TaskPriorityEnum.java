@@ -1,17 +1,22 @@
 package com.labdessoft.roteiro01.dto;
 
 public enum TaskPriorityEnum {
-    HIGH("Alto"),
-    MEDIUM("Medio"),
-    LOW("Baixo");
+    HIGH("Alta"),
+    MEDIUM("Media"),
+    LOW("Baixa");
 
-    private final String displayName;
+    private String value;
 
-    TaskPriorityEnum(String displayName) {
-        this.displayName = displayName;
+    private TaskPriorityEnum(String value) {
+        this.value = value;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public static TaskTypeEnum fromString(String value) {
+        for (TaskTypeEnum type : TaskTypeEnum.values()) {
+            if (type.getValue().equalsIgnoreCase(value)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de tarefa inválido: " + value);
     }
 }

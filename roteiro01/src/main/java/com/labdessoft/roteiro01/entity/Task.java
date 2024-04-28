@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 @Schema(description = "Entidade que representa uma tarefa")
 public abstract class Task {
 
@@ -35,5 +38,7 @@ public abstract class Task {
 
     public Task(TaskCreateDto taskCreateDto){
         this.description = taskCreateDto.getDescription();
+        this.priority = taskCreateDto.getPriority();
+        this.isDone = false;
     }
 }
