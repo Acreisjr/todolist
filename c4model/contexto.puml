@@ -1,0 +1,9 @@
+@startuml C4_Context
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "Usuário", "Interage com o sistema de gerenciamento de tarefas via web.")
+System(task_system, "Sistema de Gerenciamento de Tarefas", "Permite aos usuários criar, gerenciar e concluir tarefas.")
+
+Rel(user, task_system, "Usa")
+
+@enduml

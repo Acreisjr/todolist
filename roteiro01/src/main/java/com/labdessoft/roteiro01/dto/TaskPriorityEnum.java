@@ -1,17 +1,25 @@
 package com.labdessoft.roteiro01.dto;
 
+import lombok.Getter;
+
+@Getter
 public enum TaskPriorityEnum {
-    HIGH("Alto"),
-    MEDIUM("Medio"),
-    LOW("Baixo");
+    HIGH("Alta"),
+    MEDIUM("Media"),
+    LOW("Baixa");
 
-    private final String displayName;
+    private String value;
 
-    TaskPriorityEnum(String displayName) {
-        this.displayName = displayName;
+    private TaskPriorityEnum(String value) {
+        this.value = value;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public static TaskPriorityEnum fromString(String value) {
+        for (TaskPriorityEnum priority : TaskPriorityEnum.values()) {
+            if (priority.getValue().equalsIgnoreCase(value)) {
+                return priority;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de tarefa inválido: " + value);
     }
 }

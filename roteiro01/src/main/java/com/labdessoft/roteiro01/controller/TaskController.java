@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TaskController {
@@ -21,30 +22,31 @@ public class TaskController {
 
     @GetMapping("/task")
     @Operation(summary = "Listar todas as tarefas da lista")
-    public ResponseEntity<List<Task>> listAll() throws Exception {
-        try{
-            List<Task> taskList = taskService.listAll();
+    public ResponseEntity<List<Map<String, Object>>> listAll() throws Exception {
+        try {
+            List<Map<String, Object>> taskListWithStatus = taskService.listAllTasksWithStatus();
             
-            if(taskList.isEmpty()){
+            if (taskListWithStatus.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             
-            return ResponseEntity.ok(taskList);
-        }catch(Exception e){
+            return ResponseEntity.ok(taskListWithStatus);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/task")
     @Operation(summary = "Criar uma nova tarefa")
-    public ResponseEntity<Void> createTask(@RequestBody TaskCreateDto taskCreateDto) throws Exception {
-        try{
+    public ResponseEntity<String> createTask(@RequestBody TaskCreateDto taskCreateDto) throws Exception {
+        try {
             taskService.createTask(taskCreateDto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch(Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Tarefa criada com sucesso", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erro ao criar tarefa: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 
     @PatchMapping("/task/{id}")
     @Operation(summary = "Finalizar uma tarefa")
@@ -59,12 +61,12 @@ public class TaskController {
 
     @DeleteMapping("/task/{id}")
     @Operation(summary = "Deletar uma tarefa")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws Exception {
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) throws Exception {
         try{
             taskService.deleteTask(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch(Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Erro ao deletar tarefa: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

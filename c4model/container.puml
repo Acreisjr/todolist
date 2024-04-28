@@ -1,0 +1,13 @@
+@startuml C4_Container
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "Usuário", "Interage com o sistema de gerenciamento de tarefas via web.")
+Container(web_app, "Aplicativo Web", "Spring Boot", "Permite aos usuários interagir com suas tarefas.")
+ContainerDb(database, "Banco de Dados H2", "H2 Database", "Armazena informações de tarefa, usuários, estados e logs. Usado principalmente para desenvolvimento e testes.")
+Container(svc, "Serviço de Backend", "Spring Boot", "Lida com a lógica de negócios, autenticação e comunicação com o banco de dados.")
+
+Rel(user, web_app, "Usa", "HTTPS")
+Rel(web_app, svc, "Chama APIs", "JSON/HTTP")
+Rel(svc, database, "Lê e grava", "JDBC")
+
+@enduml

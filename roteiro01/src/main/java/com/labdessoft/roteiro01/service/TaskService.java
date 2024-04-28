@@ -10,8 +10,12 @@ import com.labdessoft.roteiro01.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService{
@@ -19,15 +23,52 @@ public class TaskService{
     @Autowired
     TaskRepository taskRepository;
 
-    public List<Task> listAll() {
-        return taskRepository.findAll();
+    private String calculateStatus(Task task) {
+        if (task.isDone()) {
+            return "Concluída";
+        }
+
+        if (task instanceof DateTask) {
+            LocalDate completionDate = ((DateTask) task).getCompletionDate();
+            LocalDate today = LocalDate.now();
+            if (today.isAfter(completionDate)) {
+                long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(completionDate, today);
+                return daysBetween + " dias de atraso";
+            }
+        } else if (task instanceof DeadlineTask) {
+            Integer daysToCompletion = ((DeadlineTask) task).getDaysToCompletion();
+            LocalDate dueDate = LocalDate.now().plusDays(daysToCompletion);
+            LocalDate today = LocalDate.now();
+            if (today.isAfter(dueDate)) {
+                long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(dueDate, today);
+                return daysBetween + " dias de atraso";
+            }
+        }
+
+        return "Prevista";
     }
 
+
+    public List<Map<String, Object>> listAllTasksWithStatus() {
+        List<Task> taskList = taskRepository.findAll();
+        return taskList.stream().map(task -> {
+            Map<String, Object> taskMap = new HashMap<>();
+            taskMap.put("id", task.getId());
+            taskMap.put("description", task.getDescription());
+            taskMap.put("status", calculateStatus(task));
+            return taskMap;
+        }).collect(Collectors.toList());
+    }
+
+    
     public void createTask(TaskCreateDto taskCreateDto) {
         Task task;
         
-        switch(TaskTypeEnum.valueOf(taskCreateDto.getType())){
+        switch(TaskTypeEnum.fromString(taskCreateDto.getType())){
             case DATA:
+                if (taskCreateDto.getCompletionDate().isBefore(LocalDate.now())) {
+                    throw new IllegalArgumentException("A data de conclusão deve ser hoje ou uma data futura.");
+                }
                 task = new DateTask(taskCreateDto);
                 ((DateTask) task).setCompletionDate(taskCreateDto.getCompletionDate());
                 break;
