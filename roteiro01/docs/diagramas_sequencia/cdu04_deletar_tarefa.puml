@@ -1,0 +1,35 @@
+@startuml diagrama_de_sequencia_deletar_tarefa
+title Diagrama de Sequencia referente ao CDU04 - Deletar Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Deletar Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: DELETE /task/{id}
+SpringBoot -> taskController: deleteTask(id)
+activate taskController
+taskController -> taskService: deleteTask(id)
+activate taskService
+taskService -> taskRepository: findById(id)
+activate taskRepository
+taskRepository --> taskService: Optional<Task>
+deactivate taskRepository
+taskService -> taskRepository: deleteById(id)
+activate taskRepository
+taskRepository --> taskService: void
+deactivate taskRepository
+taskService --> taskController: void
+deactivate taskService
+taskController --> SpringBoot: ResponseEntity<Void>
+deactivate taskController
+SpringBoot --> Frontend: ResponseEntity<Void>
+deactivate SpringBoot
+Frontend --> Usuário: Tarefa deletada
+deactivate Frontend
+deactivate Usuário
+@enduml

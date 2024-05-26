@@ -1,0 +1,31 @@
+@startuml diagrama_de_sequencia_listar_tarefas
+title Diagrama de Sequencia referente ao CDU01 - Listar todas as Tarefas
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Listar todas as Tarefas
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: GET /task
+SpringBoot -> taskController: listAll()
+activate taskController
+taskController -> taskService: listAllTasksWithStatus()
+activate taskService
+taskService -> taskRepository: findAll()
+activate taskRepository
+taskRepository --> taskService: List<Task>
+deactivate taskRepository
+taskService --> taskController: List<Map<String, Object>>
+deactivate taskService
+taskController --> SpringBoot: ResponseEntity<List<Map<String, Object>>>
+deactivate taskController
+SpringBoot --> Frontend: ResponseEntity<List<Map<String, Object>>>
+deactivate SpringBoot
+Frontend --> Usuário: <list>Task
+deactivate Frontend
+deactivate Usuário
+@enduml

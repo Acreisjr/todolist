@@ -1,0 +1,35 @@
+@startuml diagrama_de_sequencia_finalizar_tarefa
+title Diagrama de Sequencia referente ao CDU03 - Finalizar Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Finalizar Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: PATCH /task/{id}
+SpringBoot -> taskController: finishTask(id)
+activate taskController
+taskController -> taskService: finishTask(id)
+activate taskService
+taskService -> taskRepository: findById(id)
+activate taskRepository
+taskRepository --> taskService: Optional<Task>
+deactivate taskRepository
+taskService -> taskRepository: save(task)
+activate taskRepository
+taskRepository --> taskService: Task
+deactivate taskRepository
+taskService --> taskController: Task
+deactivate taskService
+taskController --> SpringBoot: ResponseEntity<Task>
+deactivate taskController
+SpringBoot --> Frontend: ResponseEntity<Task>
+deactivate SpringBoot
+Frontend --> Usuário: Tarefa finalizada
+deactivate Frontend
+deactivate Usuário
+@enduml

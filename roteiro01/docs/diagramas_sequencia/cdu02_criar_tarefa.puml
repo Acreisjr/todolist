@@ -1,0 +1,31 @@
+@startuml diagrama_de_sequencia_criar_tarefa
+title Diagrama de Sequencia referente ao CDU02 - Criar Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Criar Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: POST /task
+SpringBoot -> taskController: createTask(taskCreateDto)
+activate taskController
+taskController -> taskService: createTask(taskCreateDto)
+activate taskService
+taskService -> taskRepository: save(task)
+activate taskRepository
+taskRepository --> taskService: Task
+deactivate taskRepository
+taskService --> taskController: void
+deactivate taskService
+taskController --> SpringBoot: ResponseEntity<String>
+deactivate taskController
+SpringBoot --> Frontend: ResponseEntity<String>
+deactivate SpringBoot
+Frontend --> Usuário: Tarefa criada com sucesso
+deactivate Frontend
+deactivate Usuário
+@enduml
