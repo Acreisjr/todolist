@@ -1,13 +1,10 @@
 import React from 'react';
 import { TodoWrapper } from './components/TodoWrapper';
-import axios from 'https://cdn.skypack.dev/axios';
-
-axios.defaults.baseURL = 'todolist-cuw0.onrender.com/api';
 
 export function App() {
   return (
-    <TodoWrapper />
+    <div className="App">
+      <TodoWrapper />
+    </div>
   );
 }
-
-console.log('Hello console');
