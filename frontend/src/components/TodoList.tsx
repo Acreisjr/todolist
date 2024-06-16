@@ -1,48 +1,22 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import axios from 'https://cdn.skypack.dev/axios';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
-interface TodoListProps {
-  tasks: any[];
-  fetchTasks: () => Promise<void>;
-}
-
-export const TodoList: React.FC<TodoListProps> = ({ tasks, fetchTasks }) => {
-
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`/task/${id}`);
-      fetchTasks();
-    } catch (error) {
-      console.error('Erro ao deletar tarefa:', error);
-    }
-  };
-
-  const handleComplete = async (id: number) => {
-    try {
-      await axios.patch(`/task/${id}`);
-      fetchTasks();
-    } catch (error) {
-      console.error('Erro ao finalizar tarefa:', error);
-    }
-  };
-
+export const TodoList = ({ tasks, toggleComplete, removeTodo, editTodo }) => {
   return (
-    <>
-      {Array.isArray(tasks) && tasks.map(task => (
-        <div key={task.id} className={`Todo ${task.status === 'Concluída' ? 'completed' : 'incompleted'}`}>
-          <p className={task.status === 'Concluída' ? 'completed' : 'incompleted'}>{task.description} - {task.status}</p>
+    <div>
+      {tasks.map((task) => (
+        <div key={task.id} className="Todo">
+          <p className={task.completed ? 'completed' : 'incompleted'}>
+            {task.description}
+          </p>
           <div>
-            <FontAwesomeIcon
-              className='delete-icon'
-              icon={faTrash}
-              onClick={() => handleDelete(task.id)}
-            />
-            {task.status !== 'Concluída' && <button onClick={() => handleComplete(task.id)}>Finalizar</button>}
+            <button onClick={() => toggleComplete(task.id)}>Concluir</button>
+            <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={() => editTodo(task.id)} />
+            <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={() => removeTodo(task.id)} />
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };

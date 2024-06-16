@@ -1,122 +1,87 @@
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background: transparent; /* Make it white if you need */
+  background: #0b0c10;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .App {
-  color: #72a24d;
+  background: #1f2833;
+  padding: 2rem;
+  border-radius: 8px;
+  color: #c5c6c7;
   text-align: center;
 }
 
 h1 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-  font-size: 1.75rem;
-}
-
-button {
-  background: #8758ff;
-  color: #fff;
-  border: none;
-  padding: 0.55rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-.TodoWrapper {
-  margin-top: 5rem;
-  padding: 2rem;
-  border-radius: 5px;
+  color: #66fcf1;
+  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .TodoForm {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
 .todo-input {
-  outline: none;
-  background: none;
-  border: 1px solid #8758ff;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  width: 300px;
-  color: #fff;
-}
-
-.todo-input::placeholder {
-  color: #ffffff4d;
-}
-
-select {
-  background: #8758ff;
-  color: #fff;
-  border: none;
   padding: 0.5rem;
-  cursor: pointer;
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid #66fcf1;
+  border-radius: 4px;
 }
 
-.TodoList {
+.todo-btn {
+  padding: 0.5rem 1rem;
+  background-color: #45a29e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.Todo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #8758ff;
-  color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+  padding: 0.5rem 0;
 }
 
-.fa-trash {
-  margin-left: 0.75rem;
-}
-
-.incompleted {
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
+.Todo p {
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
 }
 
 .completed {
-  color: #c5aeff;
   text-decoration: line-through;
+  color: #66fcf1;
+}
+
+.incompleted {
+  color: #c5c6c7;
+}
+
+.Todo button {
+  margin-left: 0.5rem;
+  background-color: #45a29e;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.5rem;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .delete-icon {
   cursor: pointer;
+  margin-left: 0.5rem;
 }
 
-.Modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  outline: none;
-}
-
-.Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+.edit-icon {
+  cursor: pointer;
+  margin-left: 0.5rem;
 }

@@ -1,46 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'https://cdn.skypack.dev/axios';
+import React, { useState } from 'react';
 import { TodoForm } from './TodoForm';
 import { TodoList } from './TodoList';
-import Modal from 'react-modal';
+import { v4 as uuidv4 } from 'uuid';
 
-Modal.setAppElement('#root');
+export const TodoWrapper = () => {
+  const [todos, setTodos] = useState([]);
 
-export const TodoWrapper: React.FC = () => {
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const fetchTasks = async () => {
-    try {
-      const response = await axios.get('/task');
-      setTasks(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error('Erro ao buscar tarefas:', error);
-    }
+  const addTodo = (newTask) => {
+    const newTodo = { ...newTask, id: uuidv4(), isEditing: false };
+    setTodos([...todos, newTodo]);
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  const toggleComplete = (id) => {
+    setTodos(todos.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
+  };
 
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
+  const removeTodo = (id) => {
+    setTodos(todos.filter(task => task.id !== id));
+  };
+
+  const editTodo = (id) => {
+    setTodos(todos.map(task => task.id === id ? { ...task, isEditing: !task.isEditing } : task));
+  };
 
   return (
-    <div className='App'>
+    <div className="TodoWrapper">
       <h1>Lista de Tarefas</h1>
-      <button onClick={openModal} className="todo-btn">+</button>
-      <TodoList tasks={tasks} fetchTasks={fetchTasks} />
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Adicionar Tarefa"
-        className="Modal"
-        overlayClassName="Overlay"
-      >
-        <h2>Adicionar Nova Tarefa</h2>
-        <TodoForm fetchTasks={fetchTasks} closeModal={closeModal} />
-      </Modal>
+      <TodoForm addTodo={addTodo} />
+      <TodoList tasks={todos} toggleComplete={toggleComplete} removeTodo={removeTodo} editTodo={editTodo} />
     </div>
   );
 };
