@@ -1,5 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  background-color: #15202b;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .App {
   text-align: center;
+  padding: 20px;
+  margin: 0 20%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+button {
+  background-color: #1da1f2;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0d8be3;
 }
 
 .modal {
@@ -7,16 +44,119 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
+  background: #192734;
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 1000;
+  border-radius: 10px;
+  width: 320px;
 }
 
 .modal form div {
   margin-bottom: 10px;
 }
 
-button {
-  margin: 5px;
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  background-color: #192734;
+  border: 1px solid #253341;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+li .task-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: 10px;
+}
+
+li span {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+input, select {
+  background-color: #253341;
+  color: #ffffff;
+  border: 1px solid #1da1f2;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+input[type="date"], input[type="number"] {
+  background-color: #253341;
+  color: #ffffff;
+  border: 1px solid #1da1f2;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.CheckCircleIcon, .CloseIcon {
+  color: green;
+}
+
+.CompletedTask {
+  color: #8899a6;
+}
+
+footer {
+  background-color: #192734;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #253341;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-text {
+  text-align: left;
+}
+
+.footer-logo img {
+  max-width: 100px;
+  height: auto;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+main {
+  flex: 1;
+  padding-bottom: 100px; 
+  width: 100%;
+  box-sizing: border-box;
 }

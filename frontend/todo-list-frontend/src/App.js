@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import Footer from './components/Footer';
 import { getTasks } from './api';
-import './App.css'; 
+import './App.css';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -32,12 +33,15 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Todo List</h1>
-      <button onClick={() => setShowModal(true)}>+ Add Task</button>
-      <TodoList tasks={tasks} onEdit={handleEditTask} onTaskDeleted={fetchTasks} />
-      {showModal && (
-        <TodoForm onClose={() => setShowModal(false)} onTaskCreated={handleTaskCreated} />
-      )}
+      <main>
+        <h1>Todo List</h1>
+        <button onClick={() => setShowModal(true)}>Adicionar Tarefa</button>
+        <TodoList tasks={tasks} onEdit={handleEditTask} onTaskDeleted={fetchTasks} />
+        {showModal && (
+          <TodoForm onClose={() => setShowModal(false)} onTaskCreated={handleTaskCreated} />
+        )}
+      </main>
+      <Footer />
     </div>
   );
 }
