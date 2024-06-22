@@ -1,24 +1,5 @@
 {
   "dependencies": {
-    "axios": "1.7.2",
-    "debug": "4.3.5",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
-    "react-modal": "3.16.1",
-    "@fortawesome/react-fontawesome": "0.2.2",
-    "@fortawesome/fontawesome-svg-core": "6.5.2",
-    "@fortawesome/free-solid-svg-icons": "6.5.2",
-    "uuid": "10.0.0"
-  },
-  "name": "frontend",
-  "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node App.jsx"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "axios": "^1.7.2"
+  }
 }
